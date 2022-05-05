@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Print usage if arguments are missing or help is asked for
 if [ ${#} -lt 1 ] || [ "$1" = "-h" ] || [ "$1" = "--help" ]; then

@@ -2,23 +2,45 @@
 Information and tools for providing Julia on HLRS' compute systems.
 
 
-## Installation of a new Julia version
+## Adding a new Julia version
 First, clone this repository and create an environment variable that refers to
-the clone's path:
+the cloned directory's path:
 ```shell
 git clone git@github.com:hlrs-tasc/julia-at-hlrs.git
 export JULIA_AT_HLRS="$(pwd)/julia-at-hlrs"
 ```
-From now on, we will use `JULIA_AT_HLRS` to refer to files and folders in this
-repository.
+From now on, we will use `$JULIA_AT_HLRS` to refer to files and folders relative
+to the root of this repository.
 
-### Hawk
-
-Go to the Julia install path and run the install script with the full semver
-version of Julia you want to install. For example, for Julia 1.7.2, execute
+### Installing Julia
+Go to the directory where Julia should be installed:
 ```shell
-cd /opt/hlrs/non-spack/development/julia
+cd /opt/hlrs/non-spack/development/julia # on Hawk
+```
+Then, run the Julia install script with the full semver version of Julia you want to
+install. For example, for Julia 1.7.2, execute
+```shell
 $JULIA_AT_HLRS/bin/install_julia.sh 1.7.2
+```
+This will download the precompiled Julia binaries for the Linux x86\_64
+architecture and unpack it into a local directory named after the semver version,
+e.g., `1.7.2`. The downloaded tar file can afterwards be deleted with
+```shell
+rm julia-*.*.*-linux-x86_64.tar.gz
+```
+
+### Installing the module files
+Go to the directory where the Julia module files should be installed:
+```shell
+cd ??? # this is not currently known on Hawk
+```
+Note: The final part of the module file directory should be `julia` such that
+all Julia modules show up under `julia/xxx` in Lmod.
+
+Then, run the module file  install script with the full semver version of Julia you want to
+install. For example, for Julia 1.7.2, execute
+```shell
+$JULIA_AT_HLRS/bin/install_modulefiles.sh 1.7.2
 ```
 
 

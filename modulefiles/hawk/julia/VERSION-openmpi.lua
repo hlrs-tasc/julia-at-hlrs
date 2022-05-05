@@ -1,19 +1,19 @@
--- -*- lua -*-
--- Module file for Julia with the HPE MPT MPI implementation
+-- Module file for Julia with the OpenMPI MPI implementation
 --
 -- Author: Michael Schlottke-Lakemper <m.schlottke-lakemper@hlrs.de>
--- Date: 2022-05-04
+-- Created: 2022-05-04
+-- Last updated: 2022-05-05
 --
 
-local pkgName = myModuleName()
+local pkgName = "julia"
 local fullVersion = myModuleVersion()
 local juliaVersion = fullVersion:gsub("-.*", "")
-local base = pathJoin("/zhome/academic/HLRS/hlrs/hpcschlo/.pool", pkgName, juliaVersion)
+local base = pathJoin("/opt/hlrs/non-spack/development", pkgName, juliaVersion)
 
 -- Module information
 whatis("Name: " .. pkgName)
 whatis("Version: " .. fullVersion)
-whatis("Description: The Julia programming language with HPE MPT as the MPI backend.")
+whatis("Description: The Julia programming language with OpenMPI as the MPI backend.")
 whatis("URL: https://julialang.org")
 whatis("Wiki: https://kb.hlrs.de/platforms/index.php/Julia")
 
@@ -26,7 +26,7 @@ https://kb.hlrs.de/platforms/index.php/Julia]])
 
 -- Dependencies and siblings
 family("julia")
-depends_on("mpt")
+depends_on("openmpi")
 
 -- Base environment settings
 prepend_path("PATH", base .. "/bin")
@@ -45,4 +45,4 @@ setenv("JULIA_CUDA_USE_BINARYBUILDER", "false")
 
 -- MPI-related settings
 setenv("JULIA_MPI_BINARY", "system")
-setenv("MPI_SHEPHERD", "true")
+setenv("UCX_WARN_UNUSED_ENV_VARS", "n") -- suppress UCX warnings

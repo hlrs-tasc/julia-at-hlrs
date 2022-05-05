@@ -1,19 +1,20 @@
--- -*- lua -*-
--- Module file for Julia with the OpenMPI MPI implementation
+-- Module file for Julia with the HPE MPT MPI implementation and CUDA support
 --
 -- Author: Michael Schlottke-Lakemper <m.schlottke-lakemper@hlrs.de>
--- Date: 2022-05-04
+-- Created: 2022-05-04
+-- Last updated: 2022-05-05
 --
 
-local pkgName = myModuleName()
+local pkgName = "julia"
 local fullVersion = myModuleVersion()
 local juliaVersion = fullVersion:gsub("-.*", "")
-local base = pathJoin("/zhome/academic/HLRS/hlrs/hpcschlo/.pool", pkgName, juliaVersion)
+local base = pathJoin("/opt/hlrs/non-spack/development", pkgName, juliaVersion)
 
 -- Module information
 whatis("Name: " .. pkgName)
 whatis("Version: " .. fullVersion)
-whatis("Description: The Julia programming language with OpenMPI as the MPI backend.")
+whatis("Note: Use only on nodes with Nvidia GPUs!")
+whatis("Description: The Julia programming language with HPE MPT as the MPI backend and CUDA support.")
 whatis("URL: https://julialang.org")
 whatis("Wiki: https://kb.hlrs.de/platforms/index.php/Julia")
 
@@ -26,7 +27,7 @@ https://kb.hlrs.de/platforms/index.php/Julia]])
 
 -- Dependencies and siblings
 family("julia")
-depends_on("openmpi")
+depends_on("mpt")
 
 -- Base environment settings
 prepend_path("PATH", base .. "/bin")
@@ -45,4 +46,10 @@ setenv("JULIA_CUDA_USE_BINARYBUILDER", "false")
 
 -- MPI-related settings
 setenv("JULIA_MPI_BINARY", "system")
-setenv("UCX_WARN_UNUSED_ENV_VARS", "n") -- suppress UCX warnings
+setenv("MPI_SHEPHERD", "true")
+
+-- CUDA-related settings
+setenv("CUDA_PATH", "/usr/local/cuda")
+setenv("MPI_USE_CUDA", "true")
+setenv("JULIA_CUDA_USE_MEMORY_POOL", "none")
+--prepend_path("LD_LIBRARY_PATH", os.getenv("HOME") .. "/libs")
