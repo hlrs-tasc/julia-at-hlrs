@@ -13,10 +13,10 @@ SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 # Copy modulefiles from modulefiles directory to current working directory
 for template in "$SCRIPT_DIR/../modulefiles/$SITE_PLATFORM_NAME/julia/"VERSION-*; do
   if [ ! -f "$template" ]; then
-    echo "Skipping '$template' (not a file)..."
+    echo "Skipping '$template' (not a file)"
     continue
   fi
   modulefile=$(basename "$template" | sed "s/VERSION/$1/")
-  echo "Copying $template to ./$modulefile..."
+  echo "Copying $template to ./$modulefile ..."
   cp "$template" "$modulefile"
 done

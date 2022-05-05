@@ -23,8 +23,9 @@ install. For example, for Julia 1.7.2, execute
 $JULIA_AT_HLRS/bin/install_julia.sh 1.7.2
 ```
 This will download the precompiled Julia binaries for the Linux x86\_64
-architecture and unpack it into a local directory named after the semver version,
-e.g., `1.7.2`. The downloaded tar file can afterwards be deleted with
+architecture into the current working directory, and unpack it into a local
+directory named after the semver version, e.g., `1.7.2`. The downloaded tar file
+can afterwards be deleted with
 ```shell
 rm julia-*.*.*-linux-x86_64.tar.gz
 ```
@@ -37,12 +38,60 @@ cd ??? # this is not currently known on Hawk
 Note: The final part of the module file directory should be `julia` such that
 all Julia modules show up under `julia/xxx` in Lmod.
 
-Then, run the module file  install script with the full semver version of Julia you want to
+Then, run the module file install script with the full semver version of Julia you want to
 install. For example, for Julia 1.7.2, execute
 ```shell
 $JULIA_AT_HLRS/bin/install_modulefiles.sh 1.7.2
 ```
+This will copy the relevant module files for the different Julia modules to the
+current working directory.
 
+Finally, update the module file defaults and aliases by running the `set_modulerc.sh`
+script with the full semver version of Julia you want to install. For example,
+for Julia 1.7.2, execute
+```shell
+$JULIA_AT_HLRS/bin/set_modulerc.sh 1.7.2
+```
+Note that this will **overwrite** the `.modulerc.lua` file in your current
+directory with something like
+```lua
+module_version("/1.7.2-mpt", "mpt", "default")
+module_version("/1.7.2-mpt-cuda", "cuda")
+module_version("/1.7.2-openmpi", "openmpi")
+```
+
+### Verifying the new Julia module
+To make sure that everything works as expected, log out and back in again, and
+execute
+```shell
+module avail julia
+```
+This should list the new module files among the existing ones. Finally, verify
+that Julia is working as expected by executing
+```shell
+module load julia
+julia -e 'using InteractiveUtils; versioninfo()'
+```
+which should produce output similar to
+```
+Julia Version 1.7.2
+Commit bf53498635 (2022-02-06 15:21 UTC)
+Platform Info:
+  OS: Linux (x86_64-pc-linux-gnu)
+  CPU: AMD EPYC 7702 64-Core Processor
+  WORD_SIZE: 64
+  LIBM: libopenlibm
+  LLVM: libLLVM-12.0.1 (ORCJIT, znver2)
+Environment:
+  LMOD_FAMILY_JULIA_VERSION = 1.7.2-mpt
+  JULIA_DEPOT_PATH = /zhome/academic/HLRS/hlrs/hpcschlo/.julia/HLRS/hawk
+  JULIA_CUDA_USE_BINARYBUILDER = false
+  JULIA_MPI_BINARY = system
+  JULIA_ROOT = /opt/hlrs/non-spack/development/julia/1.7.2
+  JULIA_HOME = /opt/hlrs/non-spack/development/julia/1.7.2
+  JULIA_VERSION = 1.7.2
+  LMOD_FAMILY_JULIA = julia
+```
 
 
 ## License and contributing
