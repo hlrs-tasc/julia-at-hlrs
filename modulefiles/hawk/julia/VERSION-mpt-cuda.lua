@@ -8,7 +8,7 @@
 local pkgName = "julia"
 local fullVersion = myModuleVersion()
 local juliaVersion = fullVersion:gsub("-.*", "")
-local base = pathJoin("/opt/hlrs/non-spack/development", pkgName, juliaVersion)
+local base = pathJoin("/sw/general/x86_64/development", pkgName, juliaVersion)
 
 -- Module information
 whatis("Name: " .. pkgName)
