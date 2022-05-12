@@ -5,13 +5,12 @@
 -- Last updated: 2022-05-05
 --
 
-local pkgName = "julia"
 local fullVersion = myModuleVersion()
 local juliaVersion = fullVersion:gsub("-.*", "")
-local base = pathJoin("/sw/general/x86_64/development", pkgName, juliaVersion)
+local base = pathJoin("/sw/general/x86_64/development/julia", juliaVersion)
 
 -- Module information
-whatis("Name: " .. pkgName)
+whatis("Name: Julia")
 whatis("Version: " .. fullVersion)
 whatis("Description: The Julia programming language with OpenMPI as the MPI backend.")
 whatis("URL: https://julialang.org")
