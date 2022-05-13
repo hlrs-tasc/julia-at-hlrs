@@ -1,5 +1,5 @@
 # Julia at HLRS
-Information and tools for providing Julia on HLRS' compute systems.
+Information and tools for providing Julia on the compute systems at HLRS.
 
 
 ## Adding a new Julia version
@@ -15,7 +15,7 @@ to the root of this repository.
 ### Installing Julia
 Go to the directory where Julia should be installed:
 ```shell
-cd /opt/hlrs/non-spack/development/julia # on Hawk
+cd /sw/general/x86_64/development/julia
 ```
 Then, run the Julia install script with the full semver version of Julia you want to
 install. For example, for Julia 1.7.2, execute
@@ -27,26 +27,31 @@ architecture into the current working directory, and unpack it into a local
 directory named after the semver version, e.g., `1.7.2`. The downloaded tar file
 can afterwards be deleted with
 ```shell
-rm julia-*.*.*-linux-x86_64.tar.gz
+rm julia-*-linux-x86_64.tar.gz
 ```
 
 ### Installing the module files
+Module file installation on the compute systems at HLRS is tricky, at least on
+Hawk. Thus read these instructions carefully and re-check after each step that
+everything happened as you intended.
+
+#### Hawk
 Go to the directory where the Julia module files should be installed:
 ```shell
-cd ??? # this is not currently known on Hawk
+cd /opt/hlrs/non-spack/modulefiles/mpt/2.23/gcc/9.2.0/julia # for MPT
+cd /opt/hlrs/non-spack/modulefiles/openmpi/4.0.5/gcc/9.2.0/julia # for OpenMPI
 ```
-Note: The final part of the module file directory should be `julia` such that
-all Julia modules show up under `julia/xxx` in Lmod.
 
-Then, run the module file install script with the full semver version of Julia you want to
-install. For example, for Julia 1.7.2, execute
+Then, run the module file install script with the MPI implementation (either
+`mpt` or `openmpi`) and the full semver version of Julia you want to
+install. For example, for MPT MPI and Julia 1.7.2, execute
 ```shell
-$JULIA_AT_HLRS/bin/install_modulefiles.sh 1.7.2
+$JULIA_AT_HLRS/bin/install_modulefiles.sh mpt 1.7.2
 ```
 This will copy the relevant module files for the different Julia modules to the
 current working directory.
 
-Finally, update the module file defaults and aliases by running the `set_modulerc.sh`
+Next, update the module aliases by running the `set_modulerc.sh`
 script with the full semver version of Julia you want to install. For example,
 for Julia 1.7.2, execute
 ```shell
@@ -55,9 +60,25 @@ $JULIA_AT_HLRS/bin/set_modulerc.sh 1.7.2
 Note that this will **overwrite** the `.modulerc.lua` file in your current
 directory with something like
 ```lua
-module_version("/1.7.2-mpt", "mpt", "default")
-module_version("/1.7.2-mpt-cuda", "cuda")
-module_version("/1.7.2-openmpi", "openmpi")
+module_version("julia/1.7.2-cuda", "cuda")
+```
+
+Finally, create symlinks from the modulefile install directory to the directory
+that is actually part of the module path. To achieve this, go to the module path
+directory:
+```shell
+cd /opt/hlrs/spack/current/modulefiles/linux-centos8-x86_64/mpt/2.23-fkdhnvq/gcc/9.2.0/julia # for MPT
+cd /opt/hlrs/spack/current/modulefiles/linux-centos8-x86_64/openmpi/4.0.5-ayj43gq/gcc/9.2.0/julia # for OpenMPI
+```
+Then, call the `install_symlinks.sh` script with the path to the modulefile
+install directory and the full semver version of Julia you want to install. For
+example, for Julia 1.7.2, create the MPT symlinks by executing
+```shell
+$JULIA_AT_HLRS/bin/install_symlinks.sh /opt/hlrs/non-spack/modulefiles/mpt/2.23/gcc/9.2.0/julia 1.7.2
+```
+and the OpenMPI symlinks by executing
+```shell
+$JULIA_AT_HLRS/bin/install_symlinks.sh /opt/hlrs/non-spack/modulefiles/openmpi/4.0.5/gcc/9.2.0/julia 1.7.2
 ```
 
 ### Verifying the new Julia module
@@ -87,8 +108,8 @@ Environment:
   JULIA_DEPOT_PATH = /zhome/academic/HLRS/hlrs/hpcschlo/.julia/HLRS/hawk
   JULIA_CUDA_USE_BINARYBUILDER = false
   JULIA_MPI_BINARY = system
-  JULIA_ROOT = /opt/hlrs/non-spack/development/julia/1.7.2
-  JULIA_HOME = /opt/hlrs/non-spack/development/julia/1.7.2
+  JULIA_ROOT = /sw/general/x86_64/development/julia/1.7.2
+  JULIA_HOME = /sw/general/x86_64/development/julia/1.7.2
   JULIA_VERSION = 1.7.2
   LMOD_FAMILY_JULIA = julia
 ```

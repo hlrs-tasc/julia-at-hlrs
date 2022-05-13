@@ -16,6 +16,9 @@ if [ -n "$OIFS" ]; then
   IFS="$OIFS"
 fi
 
+# Set umask to create files/folders with sane permissions
+umask 022
+
 # Download Julia
 BASE_URL="https://julialang-s3.julialang.org/bin/linux/x64"
 TARFILE="julia-$1-linux-x86_64.tar.gz"
