@@ -51,7 +51,7 @@ $JULIA_AT_HLRS/bin/install_modulefiles.sh mpt 1.7.2
 This will copy the relevant module files for the different Julia modules to the
 current working directory.
 
-Next, update the module aliases by running the `set_modulerc.sh`
+Next, update the module defaults and aliases by running the `set_modulerc.sh`
 script with the full semver version of Julia you want to install. For example,
 for Julia 1.7.2, execute
 ```shell
@@ -60,6 +60,7 @@ $JULIA_AT_HLRS/bin/set_modulerc.sh 1.7.2
 Note that this will **overwrite** the `.modulerc.lua` file in your current
 directory with something like
 ```lua
+module_version("julia/1.7.2", "default")
 module_version("julia/1.7.2-cuda", "cuda")
 ```
 
