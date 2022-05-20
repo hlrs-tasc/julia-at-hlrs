@@ -82,10 +82,11 @@ and the OpenMPI symlinks by executing
 $JULIA_AT_HLRS/bin/install_symlinks.sh /opt/hlrs/non-spack/modulefiles/openmpi/4.0.5/gcc/9.2.0/julia 1.7.2
 ```
 
-#### Vulcan
+#### Vulcan and Training Cluster
 Go to the directory where the Julia module files should be installed:
 ```shell
-cd /opt/modulefiles/julia
+cd /opt/modulefiles/julia # on Vulcan
+cd /opt/hlrs/non-spack/modulefiles # on the training cluster
 ```
 
 Then, run the module file install script with the MPI implementation left empty
@@ -105,7 +106,7 @@ $JULIA_AT_HLRS/bin/set_modulerc.sh 1.7.2
 ```
 Note that this will **overwrite** the `.modulerc` file in your current
 directory with something like
-```lua
+```tcl
 module-version "julia/1.7.2" default
 ```
 
