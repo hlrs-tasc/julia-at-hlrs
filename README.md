@@ -104,10 +104,14 @@ for Julia 1.7.2, execute
 ```shell
 $JULIA_AT_HLRS/bin/set_modulerc.sh 1.7.2
 ```
-Note that this will **overwrite** the `.modulerc` file in your current
+Note that this will **overwrite** the `.modulerc`/`.modulerc.lua` file in your current
 directory with something like
 ```tcl
 module-version "julia/1.7.2" default
+```
+or
+```lua
+module_version("julia/1.7.2", "default")
 ```
 
 ### Verifying the new Julia module
