@@ -82,6 +82,33 @@ and the OpenMPI symlinks by executing
 $JULIA_AT_HLRS/bin/install_symlinks.sh /opt/hlrs/non-spack/modulefiles/openmpi/4.0.5/gcc/9.2.0/julia 1.7.2
 ```
 
+#### Vulcan
+Go to the directory where the Julia module files should be installed:
+```shell
+cd /opt/modulefiles/julia
+```
+
+Then, run the module file install script with the MPI implementation left empty
+(just pass the empty string `""`) and the full semver version of Julia you want to
+install. For example, for Julia 1.7.2, execute
+```shell
+$JULIA_AT_HLRS/bin/install_modulefiles.sh "" 1.7.2
+```
+This will copy the relevant module files for the different Julia modules to the
+current working directory.
+
+Next, update the module defaults and aliases by running the `set_modulerc.sh`
+script with the full semver version of Julia you want to install. For example,
+for Julia 1.7.2, execute
+```shell
+$JULIA_AT_HLRS/bin/set_modulerc.sh 1.7.2
+```
+Note that this will **overwrite** the `.modulerc` file in your current
+directory with something like
+```lua
+module-version "julia/1.7.2" default
+```
+
 ### Verifying the new Julia module
 To make sure that everything works as expected, log out and back in again, and
 execute
