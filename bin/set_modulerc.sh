@@ -11,6 +11,13 @@ fi
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
 # Copy dotfile from modulefiles directory to current working directory and adapt version
-echo "Overwriting .modulerc.lua ..."
-cat "$SCRIPT_DIR/../modulefiles/$SITE_PLATFORM_NAME/dot-modulerc.lua" \
-  | sed "s/VERSION/$1/" > .modulerc.lua
+if [ -f "$SCRIPT_DIR/../modulefiles/$SITE_PLATFORM_NAME/dot-modulerc.lua" ]; then
+  echo "Overwriting .modulerc.lua ..."
+  cat "$SCRIPT_DIR/../modulefiles/$SITE_PLATFORM_NAME/dot-modulerc.lua" \
+    | sed "s/VERSION/$1/" > .modulerc.lua
+fi
+if [ -f "$SCRIPT_DIR/../modulefiles/$SITE_PLATFORM_NAME/dot-modulerc" ]; then
+  echo "Overwriting .modulerc ..."
+  cat "$SCRIPT_DIR/../modulefiles/$SITE_PLATFORM_NAME/dot-modulerc" \
+    | sed "s/VERSION/$1/" > .modulerc
+fi
