@@ -1,0 +1,60 @@
+#%Module1.0
+#
+# Module file for Julia with the OpenMPI MPI implementation
+#
+# Author: Michael Schlottke-Lakemper <m.schlottke-lakemper@hlrs.de>
+# Created: 2022-05-04
+# Last updated: 2022-05-13
+# Source: https://github.com/hlrs-tasc/julia-at-hlrs
+#
+
+set fullVersion [module-info name]
+set juliaVersion UNKNOWN-VERSION
+set base [file join "/sw/general/x86_64/development/julia" $juliaVersion]
+
+# Module information
+module-whatis "Name: Julia"
+module-whatis "Version: $fullVersion"
+module-whatis "Description: The Julia programming language with OpenMPI as the MPI backend."
+module-whatis "URL: https://julialang.org"
+module-whatis "Wiki: https://kb.hlrs.de/platforms/index.php/Julia"
+
+proc ModulesHelp { } {
+  puts stderr "Julia is a high-productivity, high-performance programming"
+  puts stderr "language, and is especially well-suited for scientific computing and"
+  puts stderr "data analysis. For more information on Julia, see https://julialang.org."
+  puts stderr ""
+  puts stderr "For more information on Julia on HLRS systems, see"
+  puts stderr "https://kb.hlrs.de/platforms/index.php/Julia"
+}
+
+# Dependencies and siblings
+conflict tools/julia
+if {    [module-info mode] == "load"
+     || [module-info mode] == "show"
+     || [module-info mode] == "display" } {
+  if { ! [is-loaded mpi/openmpi] } {
+    module load mpi/openmpi
+  }
+}
+
+# Base environment settings
+prepend-path "PATH"            [file join "$base" "bin"]
+prepend-path "MANPATH"         [file join "$base" "share" "man"]
+prepend-path "LD_LIBRARY_PATH" [file join "$base" "lib"]
+prepend-path "CPATH"           [file join "$base" "include"]
+
+setenv "JULIA_ROOT"    "$base"
+setenv "JULIA_HOME"    "$base"
+setenv "JULIA_VERSION" "$juliaVersion"
+
+# Julia-related settings
+# $HOME/.julia/HLRS/<machine>
+setenv "JULIA_DEPOT_PATH" [file join $::env(HOME) ".julia" $::env(SITE_NAME) $::env(SITE_PLATFORM_NAME)]
+# Prevent installation of BinaryBuilder.jl CUDA
+setenv "JULIA_CUDA_USE_BINARYBUILDER" "false" 
+
+# MPI-related settings
+setenv "JULIA_MPI_BINARY" "system" 
+# suppress UCX warnings
+setenv "UCX_WARN_UNUSED_ENV_VARS" "n"

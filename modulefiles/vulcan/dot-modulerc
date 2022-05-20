@@ -1,0 +1,3 @@
+#%Module1.0
+
+module-version "julia/VERSION" default
