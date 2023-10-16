@@ -30,7 +30,7 @@ fi
 # Extract and rename
 if [ ! -d "$1" ]; then
   echo "Extracting Julia..."
-  tar xf "$TARFILE"
+  tar xf "$TARFILE" --mode='g+w'
   mv "julia-$1" "$1"
 fi
 
