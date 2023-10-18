@@ -39,12 +39,12 @@ setenv("JULIA_HOME", base)
 setenv("JULIA_VERSION", juliaVersion)
 
 -- Julia-related settings
-setenv("JULIA_DEPOT_PATH", pathJoin(os.getenv("HOME"), ".julia", os.getenv("SITE_NAME"), os.getenv("SITE_PLATFORM_NAME"))) -- $HOME/.julia/HLRS/<machine>
+-- setenv("JULIA_DEPOT_PATH", pathJoin(os.getenv("HOME"), ".julia", os.getenv("SITE_NAME"), os.getenv("SITE_PLATFORM_NAME"))) -- $HOME/.julia/HLRS/<machine>
 -- Prevent installation of BinaryBuilder.jl CUDA
-setenv("JULIA_CUDA_USE_BINARYBUILDER", "false")
+-- setenv("JULIA_CUDA_USE_BINARYBUILDER", "false")
 
 -- MPI-related settings
-setenv("JULIA_MPI_BINARY", "system")
+-- setenv("JULIA_MPI_BINARY", "system")
 setenv("MPI_SHEPHERD", "true")
 
 -- CUDA-related settings
