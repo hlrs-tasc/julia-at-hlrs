@@ -48,7 +48,7 @@ everything happened as you intended.
 Go to the directory where the Julia module files should be installed:
 ```shell
 cd /opt/hlrs/non-spack/rev-009_2022-09-01/modulefiles/mpt/2.26/gcc/10.2.0/julia # for MPT
-cd /opt/hlrs/non-spack/rev-009_2022-09-01/modulefiles/gcc/10.2.0/openmpi/julia # for OpenMPI
+cd /opt/hlrs/non-spack/rev-009_2022-09-01/modulefiles/openmpi/4.1.4/gcc/10.2.0/julia/1.9.3.lua # for OpenMPI
 ```
 Make sure the paths above are correct for `hlrs-software-stack/current`. To do so, print the
 module paths:
