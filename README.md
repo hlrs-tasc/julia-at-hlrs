@@ -1,4 +1,8 @@
 # Julia at HLRS
+**Note: This repository is no longer maintained. It is deprecated. You may find more information on HLRS's platforms and their usage [here](https://kb.hlrs.de/platforms/index.php/Platforms).**
+
+-----
+
 Information and tools for providing Julia on the compute systems at HLRS.
 
 
